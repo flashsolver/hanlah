@@ -30,6 +30,17 @@ class Hanla {
     }
 
     /**
+     * Helper to focus the hidden input only on non-touch devices (Desktop).
+     */
+    focusInput() {
+        if (this.gameOver) return;
+        const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+        if (!isTouchDevice) {
+            this.activeInput.focus();
+        }
+    }
+
+    /**
      * Set up event listeners and global keyboard support.
      */
     init() {
@@ -41,11 +52,9 @@ class Hanla {
             });
         });
 
-        // Focus management: Only focus if not a touch device to avoid triggering virtual keyboard
+        // Focus management: Use helper to prevent native keyboard on mobile
         document.getElementById('game-screen').addEventListener('click', () => {
-            if (!this.gameOver && !('ontouchstart' in window)) {
-                this.activeInput.focus();
-            }
+            this.focusInput();
         });
 
         // Native Mobile Input Sync
@@ -59,7 +68,7 @@ class Hanla {
             this.updateTiles();
         });
 
-        // Enter key for Native Keyboard
+        // Enter key for Native Keyboard (kept for Desktop users who focus the input)
         this.activeInput.addEventListener('keydown', (e) => {
             if (this.gameOver) return;
             if (e.key === 'Enter') {
@@ -77,7 +86,7 @@ class Hanla {
             this.startGame();
         });
 
-        // Physical Keyboard Support (for Desktop users not focusing the input)
+        // Physical Keyboard Support (for Desktop users)
         window.addEventListener('keydown', (e) => this.handlePhysicalInput(e));
         
         this.createVirtualKeyboard();
@@ -97,8 +106,8 @@ class Hanla {
         this.resetKeyboardColors();
         this.showScreen('game');
         
-        // Slight delay to ensure the screen transition is smooth before focusing
-        setTimeout(() => this.activeInput.focus(), 500);
+        // Slight delay to ensure the screen transition is smooth
+        setTimeout(() => this.focusInput(), 500);
     }
 
     /**
@@ -268,7 +277,7 @@ class Hanla {
         } else if (this.guesses.length === 6) {
             this.endGame(false);
         } else {
-            this.activeInput.focus(); // Ready for next guess
+            this.focusInput(); // Ready for next guess
         }
     }
 

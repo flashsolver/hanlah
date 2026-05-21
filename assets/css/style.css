@@ -199,6 +199,8 @@ header {
 /* --- Virtual Keyboard --- */
 #keyboard {
     margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
 .keyboard-row {
@@ -271,6 +273,7 @@ footer {
     font-size: 0.8rem;
     color: var(--text-color);
     opacity: 0.5;
+    margin-top: auto; /* Push to bottom of flex container */
 }
 
 .version {
@@ -280,21 +283,20 @@ footer {
 /* --- Base Mobile Responsive Overrides --- */
 @media (max-width: 600px) {
     body {
-        align-items: center; /* Re-center since we aren't fighting the keyboard anymore */
+        align-items: center;
     }
 
     #keyboard {
-        display: block;
+        display: flex;
         width: 100%;
         padding: 0 5px;
     }
 
     .key {
-        max-width: none; /* Allow flex to shrink keys */
+        max-width: none;
         height: 45px;
         padding: 0;
         font-size: 1rem;
-        border-radius: 4px;
     }
 
     .key.large {
@@ -306,15 +308,19 @@ footer {
         display: none;
     }
 
-    .tile {
-        /* Slightly smaller tiles to make room for keyboard */
-        width: clamp(45px, 12vw, 60px);
-        height: clamp(45px, 12vw, 60px);
-        font-size: clamp(1.5rem, 6vw, 2rem);
+    #board-container {
+        flex-shrink: 1;
+        min-height: 0;
+        padding: 5px 0;
     }
 
-    #board { gap: 5px; }
-    #board-container { padding: 5px 0; }
+    .tile {
+        width: clamp(40px, 12vw, 60px);
+        height: clamp(40px, 12vw, 60px);
+        font-size: clamp(1.4rem, 6vw, 2rem);
+    }
+
+    #board { gap: 4px; }
 }
 
 /* --- Modals --- */
