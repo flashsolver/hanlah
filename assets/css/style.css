@@ -341,7 +341,7 @@ header {
 
 .mobile-hint {
     font-size: 0.85rem;
-    opacity: 0.5;
+    opacity: 0.85;
     letter-spacing: 0.5px;
     color: var(--text-color);
 }
@@ -356,7 +356,7 @@ footer {
     padding: 10px;
     text-align: center;
     font-size: 0.8rem;
-    opacity: 0.5;
+    opacity: 0.85;
     margin-top: auto;
 }
 
